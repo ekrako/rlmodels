@@ -61,8 +61,8 @@ class DQN(nn.Module):
         self.epsilon = epsilon_start
         self.cnn = nn.Sequential(
             # 2D convolutional layer
-            create_conv_block(in_channels, 32, 4),
-            create_conv_block(32, 4, 4, padding=1)
+            create_conv_block(in_channels, 32, 5),
+            create_conv_block(32, 4, 5, padding=1)
         )
 
         def conv2d_size_out(size, kernel_size=3, stride=1):
