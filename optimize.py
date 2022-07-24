@@ -1,4 +1,4 @@
-from models.dqn import Transition
+from rlmodels.dqn import Transition
 import torch
 import torch.nn as nn
 def optimize_model(memory,device,policy_model,traget_model,optimizer,gamma = 0.8,batch_size=32):
