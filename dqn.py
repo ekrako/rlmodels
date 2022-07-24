@@ -61,8 +61,8 @@ class DQN(nn.Module):
         self.epsilon = epsilon_start
         self.cnn = nn.Sequential(
             # 2D convolutional layer
-            create_conv_block(in_channels, 16, 3),
-            create_conv_block(16, 4, 3, padding=1)
+            create_conv_block(in_channels, 32, 4),
+            create_conv_block(32, 4, 4, padding=1)
         )
 
         def conv2d_size_out(size, kernel_size=3, stride=1):
@@ -70,8 +70,8 @@ class DQN(nn.Module):
         convw = conv2d_size_out(conv2d_size_out(w))
         convh = conv2d_size_out(conv2d_size_out(h))
         linear_input_size = convw * convh * 4
-        hidden_nodes1 = 512
-        hidden_nodes2 = 256
+        hidden_nodes1 = 256
+        hidden_nodes2 = 128
 
         self.head = nn.Sequential(
             nn.Flatten(),
