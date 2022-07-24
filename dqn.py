@@ -51,27 +51,21 @@ def create_conv_block(in_channels, out_channels, kernel_size,
 class DQN(nn.Module):
 
     def __init__(self, h=128, w=128, outputs=5, in_channels=4, device='cpu',
-                 epsilon_start=0.9, epsilon_end=0.05, epsilon_decay=200):
+                 kernel_size=3, conv_channels=32, stride = 1,
+                 hidden_nodes1=512, hidden_nodes2=256):
         super(DQN, self).__init__()
         self.device = device
-        self.step_done = 0
-        self.epsilon_range = epsilon_start - epsilon_end
-        self.epsilon_end = epsilon_end
-        self.epsilon_decay = epsilon_decay
-        self.epsilon = epsilon_start
         self.cnn = nn.Sequential(
             # 2D convolutional layer
-            create_conv_block(in_channels, 32, 5),
-            create_conv_block(32, 4, 5, padding=1)
+            create_conv_block(in_channels, conv_channels, kernel_size),
+            create_conv_block(conv_channels, 4, kernel_size, padding=1)
         )
 
         def conv2d_size_out(size, kernel_size=3, stride=1):
             return (size - (kernel_size - 1) - 1) // stride + 1
-        convw = conv2d_size_out(conv2d_size_out(w))
-        convh = conv2d_size_out(conv2d_size_out(h))
+        convw = conv2d_size_out(conv2d_size_out(w, kernel_size, stride),kernel_size, stride)
+        convh = conv2d_size_out(conv2d_size_out(h, kernel_size, stride),kernel_size, stride)
         linear_input_size = convw * convh * 4
-        hidden_nodes1 = 256
-        hidden_nodes2 = 128
 
         self.head = nn.Sequential(
             nn.Flatten(),
