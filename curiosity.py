@@ -112,7 +112,7 @@ class FeatureExtractor(nn.Module):
 
         self.flattering = nn.Sequential(
             nn.Flatten(),
-            nn.Linear(60516, hidden_nodes1),
+            nn.Linear(56644, hidden_nodes1),
             nn.ReLU(inplace=True),
             nn.Linear(hidden_nodes1, hidden_nodes2),
             nn.ReLU(inplace=True),
