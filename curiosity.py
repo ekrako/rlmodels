@@ -30,7 +30,7 @@ def create_conv_block(in_channels, out_channels, kernel_size,
 class AC2(nn.Module):
     def __init__(self,  h=128, w=128, outputs=5, in_channels=4, device='cpu',
                  kernel_size=3, conv_channels=32, stride = 1,
-                 hidden_nodes1=128, hidden_nodes2=64):
+                 hidden_nodes1=128, hidden_nodes2=64,device='cpu'):
         super(AC2, self).__init__()
 
         self.feature_extractor = nn.Sequential(
@@ -61,6 +61,7 @@ class AC2(nn.Module):
         )
 
         self.critic = nn.Linear(hidden_nodes2, 1)
+        self.to(device)
         
     
     def forward(self, x):
