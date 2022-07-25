@@ -28,7 +28,8 @@ def create_conv_block(in_channels, out_channels, kernel_size,
 
 
 class AC2(nn.Module):
-    def __init__(self,  h=128, w=128, outputs=5, in_channels=4, device='cpu',
+    
+    def __init__(self,  h=128, w=128, outputs=5, in_channels=4,
                  kernel_size=3, conv_channels=32, stride = 1,
                  hidden_nodes1=128, hidden_nodes2=64,device='cpu'):
         super(AC2, self).__init__()
