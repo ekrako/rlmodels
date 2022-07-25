@@ -43,7 +43,7 @@ class AC2(nn.Module):
             
         )
         def conv2d_size_out(size, kernel_size=3, stride=1):
-            return (size - (kernel_size - 1) - 1) // stride + 1
+            return (size - kernel_size - 1) // stride + 1
         convw = conv2d_size_out(conv2d_size_out(conv2d_size_out(w, kernel_size, stride),kernel_size, stride),kernel_size, stride)
         convh = conv2d_size_out(conv2d_size_out(conv2d_size_out(h, kernel_size, stride),kernel_size, stride),kernel_size, stride)
         linear_input_size = convw * convh * 4
