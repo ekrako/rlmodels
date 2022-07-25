@@ -52,7 +52,7 @@ class DQN(nn.Module):
 
     def __init__(self, h=128, w=128, outputs=5, in_channels=4, device='cpu',
                  kernel_size=3, conv_channels=32, stride = 1,
-                 hidden_nodes1=512, hidden_nodes2=256):
+                 hidden_nodes1=512, hidden_nodes2=256, hidden_nodes3=64):
         super(DQN, self).__init__()
         self.device = device
         self.cnn = nn.Sequential(
@@ -74,7 +74,9 @@ class DQN(nn.Module):
             nn.ReLU(inplace=True),
             nn.Linear(hidden_nodes1, hidden_nodes2),
             nn.ReLU(inplace=True),
-            nn.Linear(hidden_nodes2, outputs)
+            nn.Linear(hidden_nodes2, hidden_nodes3),
+            nn.ReLU(inplace=True),
+            nn.Linear(hidden_nodes3, outputs)
         )
         self.to(device)
 
