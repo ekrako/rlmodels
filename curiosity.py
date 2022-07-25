@@ -71,9 +71,10 @@ class AC2(nn.Module):
         return policy, est_reward
 
 class InverseModel(nn.Module):
-  def __init__(self, n_actions, hidden_dims):
+  def __init__(self, n_actions, device='cpu'):
       super(InverseModel, self).__init__()
       self.fc = nn.Linear(64, n_actions)
+      self.to(device)
       
   def forward(self, features):
       features = features.view(1, -1)
@@ -86,6 +87,7 @@ class ForwardModel(nn.Module):
         self.fc = nn.Linear(hidden_dims+n_actions, hidden_dims)
         self.eye = torch.eye(n_actions)
         self.device = device
+        self.to(device)
         
     def forward(self, action, features):
         action = action.to(self.device)
@@ -95,7 +97,7 @@ class ForwardModel(nn.Module):
         return features
 
 class FeatureExtractor(nn.Module):
-    def __init__(self, hidden_nodes1 = 128, hidden_nodes2 = 64):
+    def __init__(self, hidden_nodes1 = 128, hidden_nodes2 = 64,device='cpu'):
         super(FeatureExtractor, self).__init__()
         self.feature_extractor = nn.Sequential(
             # 2D conv layer
@@ -114,6 +116,7 @@ class FeatureExtractor(nn.Module):
             nn.ReLU(inplace=True),
             nn.Linear(hidden_nodes2, 32),
         )
+        self.to(device)
         
     def forward(self, x):
         y = torch.tanh(self.feature_extractor(x))
